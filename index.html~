@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <body>
+    Hello, {{username}}. This will be a site
+
+  </body>
+</html>
+{% endautoescape %}

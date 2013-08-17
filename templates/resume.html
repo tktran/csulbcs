@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<style>
+		body
+		{
+			background-color:rgb(160, 140, 130);
+			font-family:Georgia, "Times New Roman", Serif;
+		}
+		header
+		{
+			display: block;
+		}
+	</style>
+	
+	<body>
+		<form method="post">
+			<header>
+				<h1>Courses</h1>
+				<p>These courses are especially useful for this career.</p>
+			</header>
+			<div>
+				this is the part where I retrieve stuff from a database.
+				{% for courseToDisplay in courses %}
+					{{ courseToDisplay.render() | safe }}
+					<br><br>
+				{% endfor %}
+				<br>
+				
+				<input type="text" name="courses-text">
+			</div>
+			
+			
+			<header>
+				<h1>Production Skills</h1>
+				<p>You can't learn these skills in a classroom, but I have them.</p>
+			</header>
+			<div>
+				this is the part where I retrieve stuff from a database for skills.
+				{% for skillToDisplay in skills %}
+					{{ skillToDisplay.render() | safe }}
+					<br>
+				{% endfor %}
+				
+				<br>
+				<select name="skills-post">
+					<option value="Test1Option">Option1</option>
+					<option value="Test2Option">Option2</option>
+					<option value="Test3Option">Option3</option>
+				</select>
+			</div>
+			
+			<header>
+				<h1>Programming Languages</h1>
+				<p>There's a difference between knowing a language and really using it, but I can really use these languages:</p>
+			</header>
+			<div>
+				this is the part where I retrieve stuff from a database for languages.
+				{% for languageToDisplay in languages %}
+					{{ languageToDisplay.render() | safe }}
+					<br>
+				{% endfor %}
+				
+				<br>
+				<select name="languages-post">
+					<option value="Test1Option">Option1</option>
+					<option value="Test2Option">Option2</option>
+					<option value="Test3Option">Option3</option>
+				</select>
+			</div>
+			<input type="submit" value="Submit courses">
+		</form>
+	</body>
+</html>
