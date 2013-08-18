@@ -44,6 +44,8 @@ class ResumePage(webapp2.RequestHandler):
 
 	def post(self):
 		courses = self.request.get('courses-text')
+		
+		## back when I thought courses were going to be integer-indexed
 ##		courses_split = courses.split(',')
 ##		
 ##		course_numbers = []
@@ -58,13 +60,22 @@ class ResumePage(webapp2.RequestHandler):
 			if not allowed_course:
 				self.error(404)
 				return
-			
-		new_course = Course(key_name = "222", parent = site_key(), 
-			name = 'TestCourse2', description = 'Desc. of test', importance = 3)
-		new_course.put()
-		
-		new_student = Student(username = "Tan Tran", parent = site_key())
+				
+		## now add those courses to the student. here, just to me.
+		## haven't figured out key vs. username distinction yet.
+		# key = db.Key.from_path('Student', "tktran", parent=site_key())
+		# student = db.get(key)
+		# student.courses = student.courses + "," + courses
+		# student.put()
+
+		# jury rigged to add new student to db
+		key = db.Key.from_path('Course', "222", parent = site_key())
+		new_student_course = StudentCourse(key_name = "test_sc", parent = site_key(),
+			course = key, rating = 50)
+		new_student = Student(key_name = "tktran", parent = site_key(),
+			username = "Tan Tran", student_courses = new_student_course)
 		new_student.put()
+		
 		self.redirect('/success')
 
 class SuccessPage(webapp2.RequestHandler):
@@ -102,11 +113,18 @@ class Language(db.Model):
 	def render(self):
 		return render_str("language.html", languageToDisplay = self)
 
+class StudentCourse(db.Model):
+	course = db.ReferenceProperty(Course)
+	rating = db.RatingProperty(required = False)
+	
 class Student(db.Model):
 	username = db.StringProperty(required = True)
-	courses = db.StringProperty(required = False)
-	skills = db.StringProperty(required = False)
-	languages = db.StringProperty(required = False)
+	student_courses = db.ListProperty(item_type = StudentCourse)
+	
+	# back when I thought these were going to be csv
+	# courses = db.StringProperty(required = False)
+	# skills = db.StringProperty(required = False)
+	# languages = db.StringProperty(required = False)
 	
 application = webapp2.WSGIApplication([ ('/', MainPage),
 					('/resume', ResumePage),
