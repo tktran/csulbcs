@@ -54,6 +54,7 @@ class ResumePage(webapp2.RequestHandler):
 		student = db.get(student_key)
 		courses_list = student.student_courses
 		
+		# TODO: make splitting robust
 		for course in courses.split(','):
 			key = db.Key.from_path('Course', course, parent=site_key())
 			allowed_course = db.get(key)
@@ -84,8 +85,13 @@ class ResumePage(webapp2.RequestHandler):
 	#	new_student.put()
 		# success!
 		
-		self.redirect('/success?' + 'added=' + '+'.join(courses_added)
-			+ 'not=' + '+'.join(courses_not_added))
+		query = ""
+		for course in courses_added:
+			query = query + 'added='+course+"&"
+		for course in courses_not_added:
+			query = query + 'nadded='+course+"&"
+
+		self.redirect('/success?' + query)
 
 class SuccessPage(webapp2.RequestHandler):
 	def write(self, *a, **kw):
@@ -98,7 +104,12 @@ class SuccessPage(webapp2.RequestHandler):
 		self.write(self.render_str(template, **kw))
 			
 	def get(self):
-		self.render('success.html')
+		query = self.request.GET
+		added, nadded = query.getall('added'), query.getall('nadded')
+		added, nadded = ', '.join(added), ', '.join(nadded)
+		text = 'These courses were added: ' + added + \
+			'These courses were not added: ' + nadded
+		self.render('success.html', text = text)
 
 class Course(db.Model):
 	name = db.StringProperty(required = True)
