@@ -26,12 +26,6 @@
 				{% endfor %}
 				<br>
 				
-				<select name="courses-post">
-					<option value="Test1Option">Option1</option>
-					<option value="Test2Option">Option2</option>
-					<option value="Test3Option">Option3</option>
-				</select>
-				
 				<input type="text" name="courses-text">
 			</div>
 			
@@ -49,9 +43,9 @@
 				
 				<br>
 				<select name="skills-post">
-					<option value="Test1Option">Option1</option>
-					<option value="Test2Option">Option2</option>
-					<option value="Test3Option">Option3</option>
+					<option value="Communication">Communication</option>
+					<option value="Debugging">Debugging</option>
+					<option value="Systems">Systems</option>
 				</select>
 			</div>
 			
@@ -68,12 +62,12 @@
 				
 				<br>
 				<select name="languages-post">
-					<option value="Test1Option">Option1</option>
-					<option value="Test2Option">Option2</option>
-					<option value="Test3Option">Option3</option>
+					<option value="Ada">Ada</option>
+					<option value="C++">C++</option>
+					<option value="Java">Java</option>
 				</select>
 			</div>
-			<input type="submit" value="Submit courses">
+			<input type="submit" value="Submit my profile">
 		</form>
 	</body>
 </html>
